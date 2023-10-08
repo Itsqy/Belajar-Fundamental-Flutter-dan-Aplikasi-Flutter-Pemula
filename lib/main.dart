@@ -10,6 +10,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
-        home: const DashboardScreen("rifqi"));
+        home: const MainScreen());
   }
 }
