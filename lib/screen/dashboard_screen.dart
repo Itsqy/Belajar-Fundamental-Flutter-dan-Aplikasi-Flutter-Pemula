@@ -98,10 +98,10 @@ class DashboardScreen extends StatelessWidget {
                                 height: 67,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 16.0),
-                              child: Expanded(
-                                flex: 2,
+                            Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
