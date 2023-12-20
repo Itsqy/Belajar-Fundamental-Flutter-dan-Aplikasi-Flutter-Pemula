@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:helloflutter/components/card_good_morning.dart';
 import 'package:helloflutter/components/card_dashboard_info.dart';
-import 'package:helloflutter/model/news_model.dart';
+import 'package:helloflutter/components/item_resto.dart';
+import 'package:helloflutter/model/restaurant.dart';
 import '../gen/fonts.gen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final String user;
+  static const routeName = "/dashboard";
 
   const DashboardScreen(this.user, {super.key});
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    final List<int> totalCard = [
-      1,
-      2,
-      3,
-      4,
-      5,
-      5,
-      5,
-      5,
-      5,
-    ];
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -32,7 +24,7 @@ class DashboardScreen extends StatelessWidget {
             Stack(children: [
               Image.asset(
                 "images/background_app.png",
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.fill,
                 width: screenSize.width.toDouble(),
                 height: 250,
               ),
@@ -59,69 +51,49 @@ class DashboardScreen extends StatelessWidget {
               const CardDashboardInfo(),
             ]),
             const Padding(
-              padding: EdgeInsets.all(25),
+              padding: EdgeInsets.only(left: 25, top: 25, right: 25),
               child: Text(
-                "Recently News",
+                "Resto",
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 22,
                     fontFamily: FontFamily.poppins,
                     fontWeight: FontWeight.bold,
                     color: Color(0xff59981A)),
               ),
             ),
-            Container(
-              height: 500,
-              width: screenSize.width,
-              padding: const EdgeInsets.only(left: 8, right: 8),
-              child: ListView.builder(
-                itemCount: newsModel.length,
-                itemBuilder: (context, index) {
-                  final NewsModel news = newsModel[index];
-                  return SizedBox(
-                    width: screenSize.width.toDouble(),
-                    child: Card(
-                      elevation: 10,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(11.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
-                              child: Image(
-                                image: AssetImage("images/item_padi.png"),
-                                width: 78,
-                                height: 67,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      news.judul,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                    ),
-                                    const Text("12 Hours ago"),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
+            const Padding(
+              padding: EdgeInsets.only(left: 25, right: 25),
+              child: Text(
+                "Eauteuy Recomendations",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: FontFamily.poppins,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 49, 94, 2)),
               ),
+            ),
+            FutureBuilder(
+              future: DefaultAssetBundle.of(context)
+                  .loadString('assets/local_restaurant.json'),
+              builder: (context, snapshot) {
+                final List restaurantData =
+                    parsingDataRestaurant(snapshot.data);
+                return Container(
+                  height: 500,
+                  width: screenSize.width,
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: ListView.builder(
+                    itemCount: restaurantData.length,
+                    itemBuilder: (context, index) {
+                      final Restaurant restaurant = restaurantData[index];
+                      return ItemResto(
+                        screenSize: screenSize,
+                        restaurant: restaurant,
+                      );
+                    },
+                  ),
+                );
+              },
             )
           ]),
         ),

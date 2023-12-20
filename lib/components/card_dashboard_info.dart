@@ -82,10 +82,10 @@ class CardDashboardInfo extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  HumidityCard("HUmidity", "90%"),
-                  HumidityCard("UV Index", "Low"),
-                  HumidityCard("Wind", "5 km/h"),
-                  HumidityCard("Pollen", "none"),
+                  HumidityCard("Callories", "90%"),
+                  HumidityCard("BM Index", "Low"),
+                  HumidityCard("Fat", "5 kg"),
+                  HumidityCard("Sugar", "Low"),
                 ],
               )
             ],
